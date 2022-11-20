@@ -9,7 +9,12 @@ public class AnomalyInfo : AnomalyBase
 
     static protected TagInfo TagFlesh = new TagInfo("Плоть", INFO.FLESH);
     static protected TagInfo TagMech = new TagInfo("Механ", INFO.MECH);
-    static protected TagInfo TagEldrich = new TagInfo("Древние", INFO.ELDRICH);
+    protected TagInfo TagEldrich = new TagInfo("Древние", INFO.ELDRICH);
+
+    private void Awake()
+    {
+        
+    }
 
     protected class TagInfo : Tag
     {

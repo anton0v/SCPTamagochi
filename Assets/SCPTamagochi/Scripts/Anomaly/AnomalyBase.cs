@@ -13,7 +13,8 @@ public class AnomalyBase : MonoBehaviour
     protected List<Tag> tags;
     protected delegate void GetAngry();
     protected GetAngry _getAngry;
-    private void Awake()
+
+    protected void Start()
     {
         sr = gameObject.GetComponent<SpriteRenderer>();
         tags = new List<Tag>();
