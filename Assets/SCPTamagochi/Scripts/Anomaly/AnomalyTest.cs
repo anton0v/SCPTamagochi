@@ -2,10 +2,11 @@
 using UnityEditor.Build.Content;
 using UnityEngine;
 
-public class AnomalyTest : AnomalyInfo
+public class AnomalyTest : AnomalyBehavior
 {
     private void Start()
     {
-        tags.Add(eldrichTag);
+        tags.Add(TagEldrich);
+        tags.Add(TagAngry);
     }
 }

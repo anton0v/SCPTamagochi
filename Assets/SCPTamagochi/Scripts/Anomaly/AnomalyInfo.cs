@@ -6,9 +6,10 @@ public class AnomalyInfo : AnomalyBase
 {
     protected enum INFO { FLESH, MECH, ELDRICH};
     protected INFO _infoType;
-    protected TagInfo fleshTag = new TagInfo("Плоть", INFO.FLESH);
-    protected TagInfo mechTag = new TagInfo("Механ", INFO.FLESH);
-    protected TagInfo eldrichTag = new TagInfo("Древние", INFO.FLESH);
+
+    static protected TagInfo TagFlesh = new TagInfo("Плоть", INFO.FLESH);
+    static protected TagInfo TagMech = new TagInfo("Механ", INFO.MECH);
+    static protected TagInfo TagEldrich = new TagInfo("Древние", INFO.ELDRICH);
 
     protected class TagInfo : Tag
     {

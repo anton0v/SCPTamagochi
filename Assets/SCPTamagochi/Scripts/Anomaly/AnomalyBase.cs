@@ -11,6 +11,8 @@ public class AnomalyBase : MonoBehaviour
     [SerializeField] private Text Info;
     private SpriteRenderer sr;
     protected List<Tag> tags;
+    protected delegate void GetAngry();
+    protected GetAngry _getAngry;
     private void Awake()
     {
         sr = gameObject.GetComponent<SpriteRenderer>();
