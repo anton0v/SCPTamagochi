@@ -7,13 +7,15 @@ public class AnomalyInfo : AnomalyBase
     protected enum INFO { FLESH, MECH, ELDRICH};
     protected INFO _infoType;
 
-    static protected TagInfo TagFlesh = new TagInfo("Плоть", INFO.FLESH);
-    static protected TagInfo TagMech = new TagInfo("Механ", INFO.MECH);
-    protected TagInfo TagEldrich = new TagInfo("Древние", INFO.ELDRICH);
+    static protected TagInfo TagFlesh;
+    static protected TagInfo TagMech;
+    static protected TagInfo TagEldrich;
 
-    private void Awake()
+    protected void Awake()
     {
-        
+        if (TagFlesh == null) TagFlesh = new TagInfo("Плоть", INFO.FLESH);
+        if (TagMech == null) TagMech = new TagInfo("Механ", INFO.MECH);
+        if (TagEldrich == null) TagEldrich = new TagInfo("Древние", INFO.ELDRICH);
     }
 
     protected class TagInfo : Tag

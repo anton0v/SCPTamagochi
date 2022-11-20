@@ -11,8 +11,9 @@ public class AnomalyBehavior : AnomalyInfo
     static protected TagBehavior TagCalm;
     static protected TagBehavior TagAngry;
 
-    private void Awake()
+    protected new void Awake()
     {
+        base.Awake();
         if (TagCalm == null) TagCalm = new TagBehavior("Спокойный", 1, 0, DecreaseAngerCnt);
         if (TagAngry == null) TagAngry = new TagBehavior("Агрессивный", 3, 1, DecreaseAngerCnt);
     }
