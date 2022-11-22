@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
-using static Anomaly;
 
 public class AnomalyBase : MonoBehaviour
 {

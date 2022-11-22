@@ -22,7 +22,7 @@ public class AnomalyBehavior : AnomalyInfo
         private int _angerMax;
         private int _angerCount;
         private int _angerDecrease;
-        AnomalyBase.GetAngry _getAngry;
+        GetAngry _getAngry;
         public TagBehavior(string name, int angerCount, int angerDecrease, GetAngry getAngry) : base(name)
         {
             _angerMax = angerCount;

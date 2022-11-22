@@ -20,8 +20,8 @@ public class AnomalyInfo : AnomalyBase
 
     protected class TagInfo : Tag
     {
-        private AnomalyInfo.INFO _infoType;
-        public TagInfo(string name, AnomalyInfo.INFO infoType) : base(name)
+        private INFO _infoType;
+        public TagInfo(string name, INFO infoType) : base(name)
         {
             Name = name;
             _infoType = infoType;
