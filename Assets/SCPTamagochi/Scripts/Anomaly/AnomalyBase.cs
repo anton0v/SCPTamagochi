@@ -28,14 +28,16 @@ public class AnomalyBase : MonoBehaviour
         Info.text = "Теги: ";
         for (int i = 0; i < tags.Count; i++)
         {
-            Info.text += "\n" + tags[i].GetDescription();
+            if(!tags[i].Hidden) Info.text += "\n" + tags[i].GetDescription();
         }
     }
     protected class Tag
     {
+        public bool Hidden { get; set; }
         public Tag(string name)
         {
             Name = name;
+            Hidden = true;
         }
         public string GetDescription()
         {

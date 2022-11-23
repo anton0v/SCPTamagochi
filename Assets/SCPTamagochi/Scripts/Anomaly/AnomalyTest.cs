@@ -9,8 +9,9 @@ public class AnomalyTest : AnomalyFood
     {
         base.Start();
         tags.Add(TagEldrich);
+        tags[0].Hidden = false;
         tags.Add(TagAngry);
-        tags.Add(TagFoodFMeat);
+        tags.Add(FoodTagList[Random.Range(0, FoodTagList.Count)]);
         SetAllTags();
     }
 }

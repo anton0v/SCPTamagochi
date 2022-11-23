@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AnomalyFood : AnomalyBehavior
@@ -8,13 +9,21 @@ public class AnomalyFood : AnomalyBehavior
     public FOOD CurrentFood { get; set; }
 
     static protected FoodTag TagFoodFruit;
-    static protected FoodTag TagFoodFMeat;
+    static protected FoodTag TagFoodMeat;
+    static protected List<FoodTag> FoodTagList;
 
     protected new void Awake()
     {
         base.Awake();
         if (TagFoodFruit == null) TagFoodFruit = new FoodTag("Фруктоед", FOOD.FRUIT);
-        if (TagFoodFMeat == null) TagFoodFMeat = new FoodTag("Мясоед", FOOD.MEAT);
+        if (TagFoodMeat == null) TagFoodMeat = new FoodTag("Мясоед", FOOD.MEAT);
+        if (FoodTagList == null)
+        {
+            FoodTagList = new List<FoodTag>();
+            FoodTagList.Add(TagFoodMeat);
+            FoodTagList.Add(TagFoodFruit);
+        }
+
     }
 
     public override void CalculateContainment()
