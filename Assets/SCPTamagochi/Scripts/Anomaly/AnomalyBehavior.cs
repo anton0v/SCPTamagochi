@@ -43,6 +43,10 @@ public class AnomalyBehavior : AnomalyInfo
 
     public void DecreaseAngerCnt()
     {
-        if(_angerCount > 0) _angerCount -= _angerDecrease;
+        if(_angerCount > 0)
+        {
+            _angerCount -= _angerDecrease;
+            if (_angerCount <= 0) sr.color = Color.red;
+        }
     }
 }

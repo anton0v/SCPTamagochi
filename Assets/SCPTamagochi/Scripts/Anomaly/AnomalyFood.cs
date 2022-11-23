@@ -7,16 +7,38 @@ public class AnomalyFood : AnomalyBehavior
     private FOOD _preferFood;
     public FOOD CurrentFood { get; set; }
 
-    static protected FoodTag TagFoodFruit = new FoodTag("Фрукты", FOOD.FRUIT);
-    static protected FoodTag TagFoodFMeat = new FoodTag("Мясо", FOOD.MEAT);
+    static protected FoodTag TagFoodFruit;
+    static protected FoodTag TagFoodFMeat;
 
     protected new void Awake()
     {
         base.Awake();
-        if (TagFoodFruit == null) TagFoodFruit = new FoodTag("Фрукты", FOOD.FRUIT);
-        if (TagFoodFMeat == null) TagFoodFMeat = new FoodTag("Мясо", FOOD.MEAT);
+        if (TagFoodFruit == null) TagFoodFruit = new FoodTag("Фруктоед", FOOD.FRUIT);
+        if (TagFoodFMeat == null) TagFoodFMeat = new FoodTag("Мясоед", FOOD.MEAT);
     }
 
+    public override void CalculateContainment()
+    {
+        base.CalculateContainment();
+        if (CurrentFood != _preferFood) _getAngry();
+    }
+
+    public override void InfoUpdate()
+    {
+        base.InfoUpdate();
+        Info.text += "\nРацион: ";
+        switch(CurrentFood)
+        {
+            case FOOD.MEAT:
+                Info.text += "Мясо";
+                break;
+            case FOOD.FRUIT:
+                Info.text += "Фрукты";
+                break;
+            default:
+                break;
+        }
+    }
     protected class FoodTag : Tag
     {
         private FOOD _preferFood;

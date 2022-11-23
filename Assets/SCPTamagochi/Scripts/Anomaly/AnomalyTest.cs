@@ -11,5 +11,6 @@ public class AnomalyTest : AnomalyFood
         tags.Add(TagEldrich);
         tags.Add(TagAngry);
         tags.Add(TagFoodFMeat);
+        SetAllTags();
     }
 }

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
-    [SerializeField] private AnomalyBase anomaly;
+    [SerializeField] private AnomalyTest anomaly;
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.W))
-        //{
-        //    anomaly.Food = (Anomaly.FOOD)((int)(anomaly.Food + 1) % Anomaly.FOOD.GetNames(typeof(Anomaly.FOOD)).Length);
-        //    anomaly.InfoUpdate();
-        //}
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            anomaly.CurrentFood = (AnomalyFood.FOOD)((int)(anomaly.CurrentFood + 1) % AnomalyFood.FOOD.GetNames(typeof(AnomalyFood.FOOD)).Length);
+            anomaly.InfoUpdate();
+        }
             
         if (Input.GetKeyDown(KeyCode.Space))
             anomaly.CalculateContainment();
