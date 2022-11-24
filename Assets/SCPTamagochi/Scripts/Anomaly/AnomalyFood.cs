@@ -53,6 +53,7 @@ public class AnomalyFood : AnomalyBehavior
         private FOOD _preferFood;
         public FoodTag(string name, FOOD preferFood) : base(name)
         {
+            TagId = 3;
             Name = name;
             _preferFood = preferFood;
             SetTag = SetFood;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class AnomalyInfo : AnomalyBase
 {
@@ -23,6 +24,8 @@ public class AnomalyInfo : AnomalyBase
         private INFO _infoType;
         public TagInfo(string name, INFO infoType) : base(name)
         {
+            TagId = 1;
+            Hidden = false;
             Name = name;
             _infoType = infoType;
             SetTag = SetInfo;

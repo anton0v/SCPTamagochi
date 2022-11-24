@@ -25,6 +25,7 @@ public class AnomalyBehavior : AnomalyInfo
         GetAngry _getAngry;
         public TagBehavior(string name, int angerCount, int angerDecrease, GetAngry getAngry) : base(name)
         {
+            TagId = 2;
             _angerMax = angerCount;
             _angerCount = angerCount;
             _angerDecrease = angerDecrease;

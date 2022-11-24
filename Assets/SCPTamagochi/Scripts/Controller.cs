@@ -5,6 +5,16 @@ using UnityEngine;
 public class Controller : MonoBehaviour
 {
     [SerializeField] private AnomalyTest anomaly;
+    Test contactTest;
+
+    private void Awake()
+    {
+        List<int> contactTestTagList = new List<int>();
+        contactTestTagList.Add(1);
+        contactTestTagList.Add(2);
+        contactTestTagList.Add(3);
+        contactTest = new Test("Контакт", contactTestTagList);
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.W))
@@ -12,7 +22,13 @@ public class Controller : MonoBehaviour
             anomaly.CurrentFood = (AnomalyFood.FOOD)((int)(anomaly.CurrentFood + 1) % AnomalyFood.FOOD.GetNames(typeof(AnomalyFood.FOOD)).Length);
             anomaly.InfoUpdate();
         }
-            
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            anomaly.Test(contactTest);
+            anomaly.InfoUpdate();
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
             anomaly.CalculateContainment();
     }
