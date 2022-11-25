@@ -6,7 +6,6 @@ public class AnomalyBehavior : AnomalyInfo
     private int _angerMax;
     private int _angerCount;
     private int _angerDecrease;
-    GetAngry _decreaseAngerCnt;
 
     static protected TagBehavior TagCalm;
     static protected TagBehavior TagAngry;

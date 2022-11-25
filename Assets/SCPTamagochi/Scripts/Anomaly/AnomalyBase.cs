@@ -8,8 +8,6 @@ using UnityEngine.UI;
 
 public class AnomalyBase : MonoBehaviour
 {
-    //public enum TEST { CONTACT, OBSERVE, TALK, SKAN}
-
     [SerializeField] protected Text Info;
     protected SpriteRenderer sr;
     protected List<Tag> tags;
@@ -47,6 +45,9 @@ public class AnomalyBase : MonoBehaviour
     {
         protected int TagId;
         public bool Hidden { get; protected set; }
+        public string Name { get; protected set; }
+        public delegate void TagDelegate(AnomalyBase anomaly);
+        public TagDelegate SetTag;
         public Tag(string name)
         {
             TagId = 0;
@@ -70,9 +71,7 @@ public class AnomalyBase : MonoBehaviour
             }
             return false;
         }
-        public string Name { get; protected set; }
-        public delegate void TagDelegate(AnomalyBase anomaly);
-        public TagDelegate SetTag;
+        
     }
 
     protected void SetAllTags()

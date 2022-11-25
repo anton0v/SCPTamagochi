@@ -9,11 +9,12 @@ public class Controller : MonoBehaviour
 
     private void Awake()
     {
-        List<int> contactTestTagList = new List<int>();
-        contactTestTagList.Add(1);
-        contactTestTagList.Add(2);
-        contactTestTagList.Add(3);
-        contactTest = new Test("Контакт", contactTestTagList);
+        contactTest = new Test("Контакт", new List<int>(new int[] { 1, 2, 3 }));
+    }
+
+    private void Start()
+    {
+        anomaly.InfoUpdate();
     }
     private void Update()
     {
