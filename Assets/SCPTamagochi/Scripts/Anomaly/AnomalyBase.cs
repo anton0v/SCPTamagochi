@@ -13,11 +13,13 @@ public class AnomalyBase : MonoBehaviour
     protected List<Tag> tags;
     protected delegate void GetAngry();
     protected GetAngry _getAngry;
+    protected Controller _controller;
 
     protected void Start()
     {
         sr = gameObject.GetComponent<SpriteRenderer>();
         tags = new List<Tag>();
+        _controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<Controller>();
     }
     public virtual void CalculateContainment()
     {
@@ -33,14 +35,6 @@ public class AnomalyBase : MonoBehaviour
         }
     }
 
-    public void Test(Test test)
-    {
-        bool flag = false;
-        for (int i = 0; i < tags.Count && !flag; i++)
-        {
-            flag = tags[i].TestCheck(test);
-        }
-    }
     protected class Tag
     {
         protected int TagId;

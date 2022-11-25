@@ -5,7 +5,7 @@ using UnityEngine.Rendering;
 
 public class AnomalyInfo : AnomalyBase
 {
-    protected enum INFO { FLESH, MECH, ELDRICH};
+    public enum INFO { FLESH, MECH, ELDRICH};
     protected INFO _infoType;
 
     static protected TagInfo TagFlesh;
@@ -17,6 +17,17 @@ public class AnomalyInfo : AnomalyBase
         if (TagFlesh == null) TagFlesh = new TagInfo("Плоть", INFO.FLESH);
         if (TagMech == null) TagMech = new TagInfo("Механ", INFO.MECH);
         if (TagEldrich == null) TagEldrich = new TagInfo("Древние", INFO.ELDRICH);
+    }
+
+    public void Test(Test test)
+    {
+        bool flag = false;
+        for (int i = 0; i < tags.Count && !flag; i++)
+        {
+            flag = tags[i].TestCheck(test);
+            if (flag)
+                _controller.AddKPoint(_infoType);
+        }
     }
 
     protected class TagInfo : Tag
