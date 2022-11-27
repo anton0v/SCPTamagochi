@@ -11,10 +11,12 @@ public class Controller : MonoBehaviour
 
     private class KPoint
     {
+        public string Name { get; private set; }
         public AnomalyInfo.INFO InfoType { get; }
         public int Count { get; set; }
-        public KPoint(AnomalyInfo.INFO info)
+        public KPoint(string name, AnomalyInfo.INFO info)
         {
+            Name = name;
             InfoType = info;
             Count = 0;
         }
@@ -28,9 +30,9 @@ public class Controller : MonoBehaviour
     private void Awake()
     {
         contactTest = new Test("Контакт", new List<int>(new int[] { 1, 2, 3 }));
-        EldrichKnowledge = new KPoint(AnomalyInfo.INFO.ELDRICH);
-        FleshKnowledge = new KPoint(AnomalyInfo.INFO.FLESH);
-        MechKnowledge = new KPoint(AnomalyInfo.INFO.MECH);
+        EldrichKnowledge = new KPoint("Древние", AnomalyInfo.INFO.ELDRICH);
+        FleshKnowledge = new KPoint("Плоть", AnomalyInfo.INFO.FLESH);
+        MechKnowledge = new KPoint("Механ", AnomalyInfo.INFO.MECH);
         KPList = new List<KPoint>();
         KPList.Add(EldrichKnowledge);
         KPList.Add(FleshKnowledge);
@@ -66,7 +68,7 @@ public class Controller : MonoBehaviour
         Info.text = "Информация: ";
         for (int i = 0; i < KPList.Count; i++)
         {
-            Info.text += "\n" + KPList[i].InfoType.ToString() + ": " + KPList[i].Count;
+            Info.text += "\n" + KPList[i].Name + ": " + KPList[i].Count;
         }
     }
 
