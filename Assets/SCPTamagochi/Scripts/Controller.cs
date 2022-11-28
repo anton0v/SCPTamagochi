@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class Controller : MonoBehaviour
 {
     [SerializeField] private AnomalyTest anomaly;
-    [SerializeField] protected Text Info;
+    [SerializeField] private Text Info;
+    [SerializeField] private GameObject[] Rooms;
+    [SerializeField] private GameObject CurrentRoom;
     Test contactTest;
 
     private class KPoint
@@ -59,6 +61,42 @@ public class Controller : MonoBehaviour
             InfoUpdate();
         }
 
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            anomaly.Room = AnomalyContain.CONTAIN_ROOM.ACULT;
+            if (CurrentRoom != Rooms[0])
+            {
+                if (CurrentRoom) CurrentRoom.gameObject.SetActive(false);
+                CurrentRoom = Rooms[0];
+                CurrentRoom.gameObject.SetActive(true);
+            }
+            InfoUpdate();
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            anomaly.Room = AnomalyContain.CONTAIN_ROOM.METAL;
+            if (CurrentRoom != Rooms[1])
+            {
+                if (CurrentRoom) CurrentRoom.gameObject.SetActive(false);
+                CurrentRoom = Rooms[1];
+                CurrentRoom.gameObject.SetActive(true);
+            }
+            InfoUpdate();
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            anomaly.Room = AnomalyContain.CONTAIN_ROOM.HOUSE;
+            if (CurrentRoom != Rooms[2])
+            {
+                if (CurrentRoom) CurrentRoom.gameObject.SetActive(false);
+                CurrentRoom = Rooms[2];
+                CurrentRoom.gameObject.SetActive(true);
+            }
+            InfoUpdate();
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
             anomaly.CalculateContainment();
     }
@@ -79,5 +117,23 @@ public class Controller : MonoBehaviour
             if (info == KPList[i].InfoType)
                 KPList[i].Count++;
         }
+    }
+
+    public void RoomUpdate(AnomalyContain.CONTAIN_ROOM room)
+    {
+        if(CurrentRoom) CurrentRoom.gameObject.SetActive(false);
+        switch(room)
+        {
+            case AnomalyContain.CONTAIN_ROOM.ACULT:
+                CurrentRoom = Rooms[0];
+                break;
+            case AnomalyContain.CONTAIN_ROOM.METAL:
+                CurrentRoom = Rooms[1];
+                break;
+            case AnomalyContain.CONTAIN_ROOM.HOUSE:
+                CurrentRoom = Rooms[2];
+                break;
+        }
+        CurrentRoom.gameObject.SetActive(true);
     }
 }
