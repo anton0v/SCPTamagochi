@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnomalyFood : AnomalyBehavior
+public class AnomalyFood : AnomalyContain
 {
     public enum FOOD { MEAT, FRUIT };
     private FOOD _preferFood;
     public FOOD CurrentFood { get; set; }
 
-    static protected FoodTag TagFoodFruit;
-    static protected FoodTag TagFoodMeat;
-    static protected List<FoodTag> FoodTagList;
+    static protected TagFood TagFoodFruit;
+    static protected TagFood TagFoodMeat;
+    static protected List<TagFood> FoodTagList;
 
     protected new void Awake()
     {
         base.Awake();
-        if (TagFoodFruit == null) TagFoodFruit = new FoodTag("Фруктоед", FOOD.FRUIT);
-        if (TagFoodMeat == null) TagFoodMeat = new FoodTag("Мясоед", FOOD.MEAT);
+        if (TagFoodFruit == null) TagFoodFruit = new TagFood("Фруктоед", FOOD.FRUIT);
+        if (TagFoodMeat == null) TagFoodMeat = new TagFood("Мясоед", FOOD.MEAT);
         if (FoodTagList == null)
         {
-            FoodTagList = new List<FoodTag>();
+            FoodTagList = new List<TagFood>();
             FoodTagList.Add(TagFoodMeat);
             FoodTagList.Add(TagFoodFruit);
         }
@@ -48,10 +48,10 @@ public class AnomalyFood : AnomalyBehavior
                 break;
         }
     }
-    protected class FoodTag : Tag
+    protected class TagFood : Tag
     {
         private FOOD _preferFood;
-        public FoodTag(string name, FOOD preferFood) : base(name)
+        public TagFood(string name, FOOD preferFood) : base(name)
         {
             TagId = 3;
             Name = name;
