@@ -1,11 +1,13 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using static AnomalyContain;
+using static AnomalyFood;
 
 public class AnomalyContain : AnomalyBehavior
 {
     public enum CONTAIN_WEAPON {GUN, TERMO, ELECTRO, CHEM}
-    public enum CONTAIN_ROOM { METAL, ACULT, HOUSE}
+    public enum CONTAIN_ROOM { METAL, OCCULT, HOUSE}
 
     public CONTAIN_ROOM Room { get; set; }
     public CONTAIN_WEAPON Weapon { get; set; }
@@ -14,10 +16,35 @@ public class AnomalyContain : AnomalyBehavior
     private CONTAIN_WEAPON _weakness;
     private CONTAIN_WEAPON _ineffective;
 
-    class TagContainWeapon : Tag
+    static protected TagRoom TagRoomOccult;
+    static protected TagRoom TagRoomMetal;
+    static protected TagRoom TagRoomHouse;
+    static protected List<TagRoom> RoomTagList;
+
+    protected new void Awake()
+    {
+        base.Awake();
+        if (TagRoomOccult == null) TagRoomOccult = new TagRoom("Оккультный", CONTAIN_ROOM.OCCULT);
+        if (TagRoomMetal == null) TagRoomMetal = new TagRoom("Разрушительный", CONTAIN_ROOM.METAL);
+        if (TagRoomHouse == null) TagRoomHouse = new TagRoom("Любит комфорт", CONTAIN_ROOM.HOUSE);
+        if (RoomTagList == null)
+        {
+            RoomTagList = new List<TagRoom>();
+            RoomTagList.Add(TagRoomOccult);
+            RoomTagList.Add(TagRoomMetal);
+            RoomTagList.Add(TagRoomHouse);
+        }
+    }
+    protected override int ResearchChance()
+    {
+        int chance = (_preferRoom == Room) ? base.ResearchChance() : base.ResearchChance() - 10;
+        return chance;
+    }
+
+    protected class TagContainWeapon : Tag
     {
         private CONTAIN_WEAPON _containWeapon;
-        TagContainWeapon(string name, CONTAIN_WEAPON weapon, bool isWeakness) : base(name)
+        public TagContainWeapon(string name, CONTAIN_WEAPON weapon, bool isWeakness) : base(name)
         {
             _containWeapon = weapon;
             if (isWeakness)
@@ -38,12 +65,14 @@ public class AnomalyContain : AnomalyBehavior
 
     }
 
-    class TagRoom : Tag
+    protected class TagRoom : Tag
     {
         CONTAIN_ROOM _room;
-        TagRoom(string name, CONTAIN_ROOM room) : base(name)
+        public TagRoom(string name, CONTAIN_ROOM room) : base(name)
         {
+            TagId = 4;
             _room = room;
+            SetTag = SetRoom;
         }
 
         void SetRoom(AnomalyBase anomaly)

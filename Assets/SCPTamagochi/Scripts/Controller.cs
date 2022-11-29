@@ -31,7 +31,7 @@ public class Controller : MonoBehaviour
 
     private void Awake()
     {
-        contactTest = new Test("Контакт", new List<int>(new int[] { 1, 2, 3 }));
+        contactTest = new Test("Контакт", new List<int>(new int[] { 1, 2, 3, 4 }));
         EldrichKnowledge = new KPoint("Древние", AnomalyInfo.INFO.ELDRICH);
         FleshKnowledge = new KPoint("Плоть", AnomalyInfo.INFO.FLESH);
         MechKnowledge = new KPoint("Механ", AnomalyInfo.INFO.MECH);
@@ -63,7 +63,7 @@ public class Controller : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            anomaly.Room = AnomalyContain.CONTAIN_ROOM.ACULT;
+            anomaly.Room = AnomalyContain.CONTAIN_ROOM.OCCULT;
             if (CurrentRoom != Rooms[0])
             {
                 if (CurrentRoom) CurrentRoom.gameObject.SetActive(false);
@@ -124,7 +124,7 @@ public class Controller : MonoBehaviour
         if(CurrentRoom) CurrentRoom.gameObject.SetActive(false);
         switch(room)
         {
-            case AnomalyContain.CONTAIN_ROOM.ACULT:
+            case AnomalyContain.CONTAIN_ROOM.OCCULT:
                 CurrentRoom = Rooms[0];
                 break;
             case AnomalyContain.CONTAIN_ROOM.METAL:

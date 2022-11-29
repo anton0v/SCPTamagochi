@@ -48,6 +48,11 @@ public class AnomalyFood : AnomalyContain
                 break;
         }
     }
+
+    protected override int ResearchChance()
+    {
+        return (_preferFood == CurrentFood) ? base.ResearchChance() : base.ResearchChance() - 10;
+    }
     protected class TagFood : Tag
     {
         private FOOD _preferFood;

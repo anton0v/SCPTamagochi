@@ -35,6 +35,11 @@ public class AnomalyBase : MonoBehaviour
         }
     }
 
+    protected virtual int ResearchChance()
+    {
+        return 100;
+    }
+
     protected class Tag
     {
         protected int TagId;

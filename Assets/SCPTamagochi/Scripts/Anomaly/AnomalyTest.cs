@@ -11,6 +11,7 @@ public class AnomalyTest : AnomalyFood
         tags.Add(TagEldrich);
         tags.Add(TagAngry);
         tags.Add(FoodTagList[Random.Range(0, FoodTagList.Count)]);
+        tags.Add(RoomTagList[Random.Range(0, RoomTagList.Count)]);
         SetAllTags();
     }
 }
