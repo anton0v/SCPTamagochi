@@ -22,11 +22,18 @@ public class AnomalyInfo : AnomalyBase
     public void Test(Test test)
     {
         bool flag = false;
-        for (int i = 0; i < tags.Count && !flag; i++)
+        Debug.Log("Шанс исследования: " + ResearchChance().ToString());
+        if(Random.Range(0, 101) > ResearchChance())
+            Debug.Log("Тестирование провалено");
+        else
         {
-            flag = tags[i].TestCheck(test);
-            if (flag)
-                _controller.AddKPoint(_infoType);
+            Debug.Log("Тестирование успешно");
+            for (int i = 0; i < tags.Count && !flag; i++)
+            {
+                flag = tags[i].TestCheck(test);
+                if (flag)
+                    _controller.AddKPoint(_infoType);
+            }
         }
     }
 
