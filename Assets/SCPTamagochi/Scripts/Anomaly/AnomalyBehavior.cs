@@ -32,6 +32,16 @@ public class AnomalyBehavior : AnomalyInfo
             SetTag = SetBehavior;
         }
 
+        public TagBehavior(TagBehavior tag) : base(tag.Name)
+        {
+            TagId = 2;
+            _angerMax = tag._angerCount;
+            _angerCount = tag._angerCount;
+            _angerDecrease = tag._angerDecrease;
+            _getAngry = tag._getAngry;
+            SetTag = tag.SetTag;
+        }
+
         public void SetBehavior(AnomalyBase anomaly)
         {
             ((AnomalyBehavior)anomaly)._angerMax = _angerMax;

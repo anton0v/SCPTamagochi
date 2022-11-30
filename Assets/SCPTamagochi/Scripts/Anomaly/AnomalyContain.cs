@@ -7,7 +7,7 @@ using static AnomalyFood;
 public class AnomalyContain : AnomalyBehavior
 {
     public enum CONTAIN_WEAPON {GUN, TERMO, ELECTRO, CHEM}
-    public enum CONTAIN_ROOM { METAL, OCCULT, HOUSE}
+    public enum CONTAIN_ROOM { NONE, METAL, OCCULT, HOUSE}
 
     public CONTAIN_ROOM Room { get; set; }
     public CONTAIN_WEAPON Weapon { get; set; }
@@ -73,6 +73,13 @@ public class AnomalyContain : AnomalyBehavior
             TagId = 4;
             _room = room;
             SetTag = SetRoom;
+        }
+
+        public TagRoom(TagRoom tag) : base(tag.Name)
+        {
+            TagId = 4;
+            _room = tag._room;
+            SetTag = tag.SetTag;
         }
 
         void SetRoom(AnomalyBase anomaly)

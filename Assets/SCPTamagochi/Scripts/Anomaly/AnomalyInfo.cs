@@ -49,6 +49,14 @@ public class AnomalyInfo : AnomalyBase
             SetTag = SetInfo;
         }
 
+        public TagInfo(TagInfo tag) : base(tag.Name)
+        {
+            TagId = 1;
+            Hidden = false;
+            _infoType = tag._infoType;
+            SetTag = tag.SetTag;
+        }
+
         private void SetInfo(AnomalyBase anomaly)
         {
             ((AnomalyInfo)anomaly)._infoType = _infoType;

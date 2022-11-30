@@ -49,6 +49,11 @@ public class AnomalyFood : AnomalyContain
         }
     }
 
+    public void HideShowSprite()
+    {
+        sr.enabled = !sr.enabled;
+    }
+
     protected override int ResearchChance()
     {
         return (_preferFood == CurrentFood) ? base.ResearchChance() : base.ResearchChance() - 10;
@@ -64,6 +69,13 @@ public class AnomalyFood : AnomalyContain
             SetTag = SetFood;
         }
 
+        public TagFood(TagFood tag) : base(tag.Name)
+        {
+            TagId = 3;
+            Name = tag.Name;
+            _preferFood = tag._preferFood;
+            SetTag = tag.SetTag;
+        }
 
         public void SetFood(AnomalyBase anomaly)
         {
