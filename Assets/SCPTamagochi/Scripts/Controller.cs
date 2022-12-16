@@ -132,6 +132,16 @@ public class Controller : MonoBehaviour
         }
     }
 
+    public int GetKPointsOfType(AnomalyInfo.INFO infoType)
+    {
+        for(int i = 0; i < KPList.Count; i++)
+        {
+            if (infoType == KPList[i].InfoType)
+                return KPList[i].Count;
+        }
+        return 0;
+    }
+
     public void RoomUpdate(AnomalyContain.CONTAIN_ROOM room)
     {
         if(CurrentRoom) CurrentRoom.gameObject.SetActive(false);
