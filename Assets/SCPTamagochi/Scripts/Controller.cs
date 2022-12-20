@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,25 +11,17 @@ public class Controller : MonoBehaviour
     [SerializeField] private Text Info;
     [SerializeField] private GameObject[] Rooms;
     [SerializeField] private GameObject CurrentRoom;
-    Test contactTest;
 
-    private class KPoint
-    {
-        public string Name { get; private set; }
-        public AnomalyInfo.INFO InfoType { get; }
-        public int Count { get; set; }
-        public KPoint(string name, AnomalyInfo.INFO info)
-        {
-            Name = name;
-            InfoType = info;
-            Count = 0;
-        }
-    }
+
+    public int Day { get; private set; } = 1;
 
     private KPoint EldrichKnowledge;
     private KPoint FleshKnowledge;
     private KPoint MechKnowledge;
     private List<KPoint> KPList;
+    private Test contactTest;
+
+    private int _actions = 3;
 
     private void Awake()
     {
@@ -60,6 +53,8 @@ public class Controller : MonoBehaviour
         {
             anomaly.Test(contactTest);
             anomaly.InfoUpdate();
+            anomaly.CalculateContainment();
+            TakeAction();
             InfoUpdate();
         }
 
@@ -110,6 +105,16 @@ public class Controller : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
             SwitchAnomaly(1);
+        }
+    }
+
+    private void TakeAction()
+    {
+        if(--_actions == 0)
+        {
+            _actions = 3;
+            Day++;
+            Debug.Log("Δενό" + Day.ToString());
         }
     }
 
@@ -172,6 +177,19 @@ public class Controller : MonoBehaviour
             anomaly.HideShowSprite();
             anomaly.InfoUpdate();
             InfoUpdate();
+        }
+    }
+
+    private class KPoint
+    {
+        public string Name { get; private set; }
+        public AnomalyInfo.INFO InfoType { get; }
+        public int Count { get; set; }
+        public KPoint(string name, AnomalyInfo.INFO info)
+        {
+            Name = name;
+            InfoType = info;
+            Count = 0;
         }
     }
 }
