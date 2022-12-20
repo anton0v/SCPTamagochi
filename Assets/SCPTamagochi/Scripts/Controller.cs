@@ -55,6 +55,7 @@ public class Controller : MonoBehaviour
             anomaly.InfoUpdate();
             anomaly.CalculateContainment();
             TakeAction();
+            Debug.Log(anomaly);
             InfoUpdate();
         }
 
@@ -106,6 +107,12 @@ public class Controller : MonoBehaviour
         {
             SwitchAnomaly(1);
         }
+
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            SwitchAnomaly(2);
+        }
+
     }
 
     private void TakeAction()

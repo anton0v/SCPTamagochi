@@ -12,7 +12,7 @@ public class AnomalyBase : MonoBehaviour
     [SerializeField] protected Sprite[] SpriteSamples;
     protected SpriteRenderer sr;
     protected List<Tag> tags;
-    protected delegate void GetAngry();
+    protected delegate void GetAngry(AnomalyBase anomaly);
     protected GetAngry _getAngry;
     protected Controller _controller;
 
