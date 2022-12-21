@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Bson;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,14 +15,14 @@ public class Controller : MonoBehaviour
 
 
     public int Day { get; private set; } = 1;
+    public int Actions { get; private set; } = 3;
 
     private KPoint EldrichKnowledge;
     private KPoint FleshKnowledge;
     private KPoint MechKnowledge;
-    private List<KPoint> KPList;
+    public List<KPoint> KPList { get; private set; }
     private Test contactTest;
-
-    private int _actions = 3;
+    
 
     private void Awake()
     {
@@ -45,18 +46,12 @@ public class Controller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            anomaly.CurrentFood = (AnomalyFood.FOOD)((int)(anomaly.CurrentFood + 1) % AnomalyFood.FOOD.GetNames(typeof(AnomalyFood.FOOD)).Length);
-            anomaly.InfoUpdate();
+            ChangeDiet();
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            anomaly.Test(contactTest);
-            anomaly.InfoUpdate();
-            anomaly.CalculateContainment();
-            TakeAction();
-            Debug.Log(anomaly);
-            InfoUpdate();
+            ContactTest();
         }
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -115,11 +110,27 @@ public class Controller : MonoBehaviour
 
     }
 
+    public void ChangeDiet()
+    {
+        anomaly.CurrentFood = (AnomalyFood.FOOD)((int)(anomaly.CurrentFood + 1) % AnomalyFood.FOOD.GetNames(typeof(AnomalyFood.FOOD)).Length);
+        anomaly.InfoUpdate();
+    }
+
+    public void ContactTest()
+    {
+        anomaly.Test(contactTest);
+        anomaly.InfoUpdate();
+        anomaly.CalculateContainment();
+        TakeAction();
+        Debug.Log(anomaly);
+        InfoUpdate();
+    }
+
     private void TakeAction()
     {
-        if(--_actions == 0)
+        if(--Actions == 0)
         {
-            _actions = 3;
+            Actions = 3;
             Day++;
             Debug.Log("Δενό" + Day.ToString());
         }
@@ -187,7 +198,7 @@ public class Controller : MonoBehaviour
         }
     }
 
-    private class KPoint
+    public class KPoint
     {
         public string Name { get; private set; }
         public AnomalyInfo.INFO InfoType { get; }
