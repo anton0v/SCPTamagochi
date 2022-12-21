@@ -11,7 +11,7 @@ public class AnomalyBase : MonoBehaviour
     [SerializeField] protected Text Info;
     [SerializeField] protected Sprite[] SpriteSamples;
     protected SpriteRenderer sr;
-    protected List<Tag> tags;
+    public List<Tag> Tags { get; private set; }
     protected delegate void GetAngry(AnomalyBase anomaly);
     protected GetAngry _getAngry;
     protected Controller _controller;
@@ -19,7 +19,7 @@ public class AnomalyBase : MonoBehaviour
     protected void Start()
     {
         sr = gameObject.GetComponent<SpriteRenderer>();
-        tags = new List<Tag>();
+        Tags = new List<Tag>();
         _controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<Controller>();
     }
     public virtual void CalculateContainment()
@@ -30,9 +30,9 @@ public class AnomalyBase : MonoBehaviour
     public virtual void InfoUpdate()
     {
         Info.text = "Теги: ";
-        for (int i = 0; i < tags.Count; i++)
+        for (int i = 0; i < Tags.Count; i++)
         {
-            if(!tags[i].Hidden) Info.text += "\n" + tags[i].GetDescription();
+            if(!Tags[i].Hidden) Info.text += "\n" + Tags[i].GetDescription();
         }
     }
 
@@ -41,7 +41,7 @@ public class AnomalyBase : MonoBehaviour
         return 100;
     }
 
-    protected class Tag
+    public class Tag
     {
         protected int TagId;
         public bool Hidden { get; protected set; }
@@ -76,9 +76,9 @@ public class AnomalyBase : MonoBehaviour
 
     protected void SetAllTags()
     {
-        for(int i = 0; i < tags.Count; i++)
+        for(int i = 0; i < Tags.Count; i++)
         {
-            tags[i].SetTag(this);
+            Tags[i].SetTag(this);
         }
     }
 }

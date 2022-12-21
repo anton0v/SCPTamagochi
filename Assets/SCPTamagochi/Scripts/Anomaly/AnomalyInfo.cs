@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 public class AnomalyInfo : AnomalyBase
 {
     public enum INFO { FLESH, MECH, ELDRICH};
-    protected INFO _infoType;
+    public INFO InfoType { get; private set; }
     protected int _infoRequiredScore = 0;
 
     static protected TagInfo TagFlesh;
@@ -29,30 +29,30 @@ public class AnomalyInfo : AnomalyBase
         else
         {
             Debug.Log("Тестирование успешно");
-            for (int i = 0; i < tags.Count && !flag; i++)
+            for (int i = 0; i < Tags.Count && !flag; i++)
             {
-                flag = tags[i].TestCheck(test);
+                flag = Tags[i].TestCheck(test);
                 if (flag)
-                    _controller.AddKPoint(_infoType);
+                    _controller.AddKPoint(InfoType);
             }
         }
     }
 
     protected override int ResearchChance()
     {
-        int current = _controller.GetKPointsOfType(_infoType);
+        int current = _controller.GetKPointsOfType(InfoType);
         return (current < _infoRequiredScore) ? base.ResearchChance() - 10 * (_infoRequiredScore - current) : base.ResearchChance();
     }
 
     protected class TagInfo : Tag
     {
-        private INFO _infoType;
+        private INFO InfoType;
         public TagInfo(string name, INFO infoType) : base(name)
         {
             TagId = 1;
             Hidden = false;
             Name = name;
-            _infoType = infoType;
+            InfoType = infoType;
             SetTag = SetInfo;
         }
 
@@ -60,13 +60,13 @@ public class AnomalyInfo : AnomalyBase
         {
             TagId = 1;
             Hidden = false;
-            _infoType = tag._infoType;
+            InfoType = tag.InfoType;
             SetTag = tag.SetTag;
         }
 
         private void SetInfo(AnomalyBase anomaly)
         {
-            ((AnomalyInfo)anomaly)._infoType = _infoType;
+            ((AnomalyInfo)anomaly).InfoType = InfoType;
         }
     }
         
