@@ -11,7 +11,7 @@ public class Controller : MonoBehaviour
     [SerializeField] private Text Info;
     [SerializeField] private GameObject[] Rooms;
     [SerializeField] private GameObject CurrentRoom;
-    [SerializeField] public AnomalyTest Anomaly { get; private set; }
+    public AnomalyTest Anomaly { get; private set; }
 
 
     public int Day { get; private set; } = 1;
@@ -38,8 +38,8 @@ public class Controller : MonoBehaviour
 
     private void Start()
     {
-        InfoUpdate();
         Anomaly = anomalies[0];
+        InfoUpdate();
         Anomaly.InfoUpdate();
     }
     private void Update()
