@@ -51,12 +51,12 @@ public class AnomalyBehavior : AnomalyInfo
         }
     }
 
-    public void DecreaseAngerCnt()
+    public static void DecreaseAngerCnt(AnomalyBase anomaly)
     {
-        if(_angerCount > 0)
+        if(((AnomalyBehavior)anomaly)._angerCount > 0)
         {
-            _angerCount -= _angerDecrease;
-            if (_angerCount <= 0) sr.color = Color.red;
+            ((AnomalyBehavior)anomaly)._angerCount -= ((AnomalyBehavior)anomaly)._angerDecrease;
+            if (((AnomalyBehavior)anomaly)._angerCount <= 0) ((AnomalyBehavior)anomaly).sr.color = Color.red;
         }
     }
 }

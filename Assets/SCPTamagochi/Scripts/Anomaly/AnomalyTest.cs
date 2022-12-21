@@ -13,5 +13,7 @@ public class AnomalyTest : AnomalyFood
         tags.Add(new TagFood(FoodTagList[Random.Range(0, FoodTagList.Count)]));
         tags.Add(new TagRoom(RoomTagList[Random.Range(0, RoomTagList.Count)]));
         SetAllTags();
+        _infoRequiredScore = 3;
+        sr.sprite = SpriteSamples[Random.Range(0, SpriteSamples.Length)];
     }
 }

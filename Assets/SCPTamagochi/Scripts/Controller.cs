@@ -1,3 +1,5 @@
+using Newtonsoft.Json.Bson;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,25 +12,17 @@ public class Controller : MonoBehaviour
     [SerializeField] private Text Info;
     [SerializeField] private GameObject[] Rooms;
     [SerializeField] private GameObject CurrentRoom;
-    Test contactTest;
 
-    private class KPoint
-    {
-        public string Name { get; private set; }
-        public AnomalyInfo.INFO InfoType { get; }
-        public int Count { get; set; }
-        public KPoint(string name, AnomalyInfo.INFO info)
-        {
-            Name = name;
-            InfoType = info;
-            Count = 0;
-        }
-    }
+
+    public int Day { get; private set; } = 1;
+    public int Actions { get; private set; } = 3;
 
     private KPoint EldrichKnowledge;
     private KPoint FleshKnowledge;
     private KPoint MechKnowledge;
-    private List<KPoint> KPList;
+    public List<KPoint> KPList { get; private set; }
+    private Test contactTest;
+    
 
     private void Awake()
     {
@@ -52,15 +46,12 @@ public class Controller : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            anomaly.CurrentFood = (AnomalyFood.FOOD)((int)(anomaly.CurrentFood + 1) % AnomalyFood.FOOD.GetNames(typeof(AnomalyFood.FOOD)).Length);
-            anomaly.InfoUpdate();
+            ChangeDiet();
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            anomaly.Test(contactTest);
-            anomaly.InfoUpdate();
-            InfoUpdate();
+            ContactTest();
         }
 
         if (Input.GetKeyDown(KeyCode.A))
@@ -111,6 +102,38 @@ public class Controller : MonoBehaviour
         {
             SwitchAnomaly(1);
         }
+
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            SwitchAnomaly(2);
+        }
+
+    }
+
+    public void ChangeDiet()
+    {
+        anomaly.CurrentFood = (AnomalyFood.FOOD)((int)(anomaly.CurrentFood + 1) % AnomalyFood.FOOD.GetNames(typeof(AnomalyFood.FOOD)).Length);
+        anomaly.InfoUpdate();
+    }
+
+    public void ContactTest()
+    {
+        anomaly.Test(contactTest);
+        anomaly.InfoUpdate();
+        anomaly.CalculateContainment();
+        TakeAction();
+        Debug.Log(anomaly);
+        InfoUpdate();
+    }
+
+    private void TakeAction()
+    {
+        if(--Actions == 0)
+        {
+            Actions = 3;
+            Day++;
+            Debug.Log("Δενό" + Day.ToString());
+        }
     }
 
     public void InfoUpdate()
@@ -130,6 +153,16 @@ public class Controller : MonoBehaviour
             if (info == KPList[i].InfoType)
                 KPList[i].Count++;
         }
+    }
+
+    public int GetKPointsOfType(AnomalyInfo.INFO infoType)
+    {
+        for(int i = 0; i < KPList.Count; i++)
+        {
+            if (infoType == KPList[i].InfoType)
+                return KPList[i].Count;
+        }
+        return 0;
     }
 
     public void RoomUpdate(AnomalyContain.CONTAIN_ROOM room)
@@ -162,6 +195,19 @@ public class Controller : MonoBehaviour
             anomaly.HideShowSprite();
             anomaly.InfoUpdate();
             InfoUpdate();
+        }
+    }
+
+    public class KPoint
+    {
+        public string Name { get; private set; }
+        public AnomalyInfo.INFO InfoType { get; }
+        public int Count { get; set; }
+        public KPoint(string name, AnomalyInfo.INFO info)
+        {
+            Name = name;
+            InfoType = info;
+            Count = 0;
         }
     }
 }

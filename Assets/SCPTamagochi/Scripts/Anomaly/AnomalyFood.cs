@@ -29,7 +29,7 @@ public class AnomalyFood : AnomalyContain
     public override void CalculateContainment()
     {
         base.CalculateContainment();
-        if (CurrentFood != _preferFood) _getAngry();
+        if (CurrentFood != _preferFood) _getAngry(this);
     }
 
     public override void InfoUpdate()

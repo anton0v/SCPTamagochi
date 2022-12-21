@@ -7,6 +7,7 @@ public class AnomalyInfo : AnomalyBase
 {
     public enum INFO { FLESH, MECH, ELDRICH};
     protected INFO _infoType;
+    protected int _infoRequiredScore = 0;
 
     static protected TagInfo TagFlesh;
     static protected TagInfo TagMech;
@@ -35,6 +36,12 @@ public class AnomalyInfo : AnomalyBase
                     _controller.AddKPoint(_infoType);
             }
         }
+    }
+
+    protected override int ResearchChance()
+    {
+        int current = _controller.GetKPointsOfType(_infoType);
+        return (current < _infoRequiredScore) ? base.ResearchChance() - 10 * (_infoRequiredScore - current) : base.ResearchChance();
     }
 
     protected class TagInfo : Tag
