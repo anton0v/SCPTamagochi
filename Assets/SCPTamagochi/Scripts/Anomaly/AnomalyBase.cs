@@ -41,6 +41,11 @@ public class AnomalyBase : MonoBehaviour
         return 100;
     }
 
+    public void HideShowSprite()
+    {
+        sr.enabled = !sr.enabled;
+    }
+
     public class Tag
     {
         protected int TagId;
