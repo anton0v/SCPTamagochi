@@ -49,11 +49,6 @@ public class AnomalyFood : AnomalyContain
         }
     }
 
-    public void HideShowSprite()
-    {
-        sr.enabled = !sr.enabled;
-    }
-
     protected override int ResearchChance()
     {
         return (_preferFood == CurrentFood) ? base.ResearchChance() : base.ResearchChance() - 10;
