@@ -9,7 +9,7 @@ public class AnomalyTest : AnomalyFood
     private new void Start()
     {
         base.Start();
-        Tags.Add(new TagInfo(TagEldrich));
+        Tags.Add(new TagInfo(InfoTagList[Random.Range(0, InfoTagList.Count)]));
         Tags.Add(new TagBehavior(TagAngry));
         Tags.Add(new TagFood(FoodTagList[Random.Range(0, FoodTagList.Count)]));
         Tags.Add(new TagRoom(RoomTagList[Random.Range(0, RoomTagList.Count)]));

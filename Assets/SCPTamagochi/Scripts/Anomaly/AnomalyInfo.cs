@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -12,12 +13,20 @@ public class AnomalyInfo : AnomalyBase
     static protected TagInfo TagFlesh;
     static protected TagInfo TagMech;
     static protected TagInfo TagEldrich;
+    static protected List<TagInfo> InfoTagList;
 
     protected void Awake()
     {
         if (TagFlesh == null) TagFlesh = new TagInfo("Плоть", INFO.FLESH);
         if (TagMech == null) TagMech = new TagInfo("Механ", INFO.MECH);
         if (TagEldrich == null) TagEldrich = new TagInfo("Древние", INFO.ELDRICH);
+        if (InfoTagList == null)
+        {
+            InfoTagList = new List<TagInfo>();
+            InfoTagList.Add(TagFlesh);
+            InfoTagList.Add(TagMech);
+            InfoTagList.Add(TagEldrich);
+        }
     }
 
     public void Test(Test test)
