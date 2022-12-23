@@ -98,6 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpriteSamples:
+  - {fileID: 21300000, guid: 497a66b7a4fe0744e8a8854e308fc012, type: 3}
+  - {fileID: 21300000, guid: 830e6a24b5b75cf498c9e976c2248fc6, type: 3}
+  - {fileID: 21300000, guid: 37826d1ca5f4a60418673a6ec6c8736b, type: 3}
   - {fileID: 21300000, guid: 6fb2ce6d7e58d4147a70655243892ec9, type: 3}
+  - {fileID: 21300000, guid: 919d3f7f325482c42ab8104311d8fcf1, type: 3}
   - {fileID: 21300000, guid: bb7ffd13b2e2d174093f23e139929b15, type: 3}
   sr: {fileID: 3901471906043936652}
