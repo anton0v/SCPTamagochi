@@ -16,6 +16,6 @@ public class AnomalyTest : AnomalyFood
         SetAllTags();
         _infoRequiredScore = 3;
         sr.sprite = SpriteSamples[Random.Range(0, SpriteSamples.Length)];
-        //sr.color = new Color((float)Random.Range(0, 255), (float)Random.Range(0, 255), (float)Random.Range(0, 255) );
+        sr.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f) );
     }
 }

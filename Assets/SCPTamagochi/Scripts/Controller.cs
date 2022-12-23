@@ -3,14 +3,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Controller : MonoBehaviour
 {
-    [SerializeField] private AnomalyTest[] anomalies;
+    
     [SerializeField] private Text Info;
     [SerializeField] private GameObject[] Rooms;
     [SerializeField] private GameObject CurrentRoom;
+    private List<AnomalyBase> _anomalies;
+    private KeyCode[] _keypad;
     public AnomalyTest Anomaly { get; private set; }
 
 
@@ -22,6 +25,7 @@ public class Controller : MonoBehaviour
     private KPoint MechKnowledge;
     public List<KPoint> KPList { get; private set; }
     private Test contactTest;
+    public UnityAction OnEndDay;
     
 
     private void Awake()
@@ -34,13 +38,25 @@ public class Controller : MonoBehaviour
         KPList.Add(EldrichKnowledge);
         KPList.Add(FleshKnowledge);
         KPList.Add(MechKnowledge);
+        _keypad = new KeyCode[] { KeyCode.Keypad0,
+                                  KeyCode.Keypad1, KeyCode.Keypad2, KeyCode.Keypad3,
+                                  KeyCode.Keypad4, KeyCode.Keypad5, KeyCode.Keypad6,
+                                  KeyCode.Keypad7, KeyCode.Keypad8, KeyCode.Keypad9,
+        };
+        _anomalies = new List<AnomalyBase>();
     }
 
     private void Start()
     {
-        Anomaly = anomalies[0];
+        
+    }
+    public void Init()
+    {
+        Anomaly = (AnomalyTest)_anomalies[0];
         InfoUpdate();
-        Anomaly.InfoUpdate();
+        Debug.Log("1");
+        Anomaly.HideShowSprite();
+        Debug.Log("2");
     }
     private void Update()
     {
@@ -93,21 +109,17 @@ public class Controller : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             Anomaly.CalculateContainment();
 
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-        {
-            SwitchAnomaly(0);
-        }
+        CheckKeyPadPressed();
 
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            SwitchAnomaly(1);
-        }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Keypad3))
-        {
-            SwitchAnomaly(2);
-        }
-
+    private void CheckKeyPadPressed()
+    {
+        for(int i = 0; i < 10; i++)
+            if (Input.GetKeyDown(_keypad[i]))
+            {
+                SwitchAnomaly(i);
+            }
     }
     public void ChangeDiet()
     {
@@ -132,6 +144,9 @@ public class Controller : MonoBehaviour
             Actions = 3;
             Day++;
             Debug.Log("Δενό" + Day.ToString());
+            if (Day > 10)
+                return;
+            OnEndDay();
         }
     }
 
@@ -185,12 +200,17 @@ public class Controller : MonoBehaviour
         CurrentRoom.gameObject.SetActive(true);
     }
 
+    public void AddAnomaly(AnomalyBase anomaly)
+    {
+        _anomalies.Add(anomaly);
+    }
+
     public void SwitchAnomaly(int num)
     {
-        if(num < anomalies.Length)
+        if(num < _anomalies.Count)
         {
             Anomaly.HideShowSprite();
-            Anomaly = anomalies[num];
+            Anomaly = (AnomalyTest)_anomalies[num];
             Anomaly.HideShowSprite();
             Anomaly.InfoUpdate();
             InfoUpdate();

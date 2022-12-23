@@ -8,17 +8,23 @@ using UnityEngine.UI;
 
 public class AnomalyBase : MonoBehaviour
 {
-    [SerializeField] protected Text Info;
     [SerializeField] protected Sprite[] SpriteSamples;
-    protected SpriteRenderer sr;
+    protected Text Info;
+    [SerializeField] protected SpriteRenderer sr;
     public List<Tag> Tags { get; private set; }
     protected delegate void GetAngry(AnomalyBase anomaly);
     protected GetAngry _getAngry;
     protected Controller _controller;
 
+    private void Awake()
+    {
+        
+    }
     protected void Start()
     {
-        sr = gameObject.GetComponent<SpriteRenderer>();
+        Info = GameObject.FindGameObjectWithTag("Info").GetComponent<Text>();
+        Debug.Log(Info.text);
+        //sr = gameObject.GetComponent<SpriteRenderer>();
         Tags = new List<Tag>();
         _controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<Controller>();
     }
@@ -29,6 +35,7 @@ public class AnomalyBase : MonoBehaviour
 
     public virtual void InfoUpdate()
     {
+        Debug.Log(Info.text);
         Info.text = "Теги: ";
         for (int i = 0; i < Tags.Count; i++)
         {
