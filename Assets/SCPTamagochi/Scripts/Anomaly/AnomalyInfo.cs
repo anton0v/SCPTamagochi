@@ -40,6 +40,7 @@ public class AnomalyInfo : AnomalyBase
         }
 
         Debug.Log("Тестирование успешно");
+        Debug.Log(Tags[0].Name);
         for (int i = 0; i < Tags.Count && !flag; i++)
         {
             flag = Tags[i].TestCheck(test);

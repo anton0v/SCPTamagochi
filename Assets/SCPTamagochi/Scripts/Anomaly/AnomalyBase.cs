@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -15,6 +14,7 @@ public class AnomalyBase : MonoBehaviour
     protected delegate void GetAngry(AnomalyBase anomaly);
     protected GetAngry _getAngry;
     protected Controller _controller;
+    public bool IsStudied { get; private set; } = false;
 
     private void Awake()
     {
@@ -48,6 +48,27 @@ public class AnomalyBase : MonoBehaviour
     public void HideShowSprite()
     {
         sr.enabled = !sr.enabled;
+    }
+
+    public void CheckHiddenTags()
+    {
+        for (int i = 0; i < Tags.Count; i++)
+        {
+            if (Tags[i].Hidden)
+                return;
+        }
+        IsStudied = true;
+    }
+
+    protected void ShuffleHiddenTags()
+    {
+        for(int i = 0;  i < Tags.Count; i++)
+        {
+            Tag temp = Tags[i];
+            int randIndex = Random.Range(0, Tags.Count);
+            Tags[i] = Tags[randIndex];
+            Tags[randIndex] = temp;
+        }
     }
 
     public class Tag
