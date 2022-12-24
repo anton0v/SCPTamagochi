@@ -29,22 +29,24 @@ public class AnomalyInfo : AnomalyBase
         }
     }
 
-    public void Test(Test test)
+    public bool Test(Test test)
     {
         bool flag = false;
         Debug.Log("Шанс исследования: " + ResearchChance().ToString());
         if(Random.Range(0, 101) > ResearchChance())
-            Debug.Log("Тестирование провалено");
-        else
         {
-            Debug.Log("Тестирование успешно");
-            for (int i = 0; i < Tags.Count && !flag; i++)
-            {
-                flag = Tags[i].TestCheck(test);
-                if (flag)
-                    _controller.AddKPoint(InfoType);
-            }
+            Debug.Log("Тестирование провалено");
+            return false;
         }
+
+        Debug.Log("Тестирование успешно");
+        for (int i = 0; i < Tags.Count && !flag; i++)
+        {
+            flag = Tags[i].TestCheck(test);
+            if (flag)
+                _controller.AddKPoint(InfoType);
+        }
+        return true;
     }
 
     protected override int ResearchChance()

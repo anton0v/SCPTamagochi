@@ -34,6 +34,10 @@ public class AnomalyFood : AnomalyContain
         if (CurrentFood != _preferFood) _getAngry(this);
     }
 
+    public int GetFoodCost()
+    {
+        return _foodCost[(int)CurrentFood];
+    }
     public override void InfoUpdate()
     {
         base.InfoUpdate();
