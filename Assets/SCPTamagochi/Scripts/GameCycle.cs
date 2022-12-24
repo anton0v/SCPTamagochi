@@ -14,6 +14,8 @@ public class GameCycle : MonoBehaviour
         _controller.Init();
         _controller.OnEndDay += AddAnomaly;
         _controller.OnEndDay += ProvideFunding;
+        _controller.OnGameEnd += Victory;
+        _controller.OnFailure += Failure;
     }
 
     public void AddAnomaly()
@@ -26,5 +28,15 @@ public class GameCycle : MonoBehaviour
     {
         _controller.Capital += _finance;
         _finance += 100 * (_controller.Day - 1);
+    }
+
+    public void Victory()
+    {
+        Debug.Log("ВСЕ АНОМАЛИИ ИЗУЧЕНЫ");
+    }
+
+    public void Failure()
+    {
+        Debug.Log("ДЕНЬГИ КОНЧАЛИСЬ, КОНЕЦ ИГРЫ");
     }
 }

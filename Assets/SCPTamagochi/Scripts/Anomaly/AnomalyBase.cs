@@ -22,9 +22,9 @@ public class AnomalyBase : MonoBehaviour
     }
     protected void Start()
     {
+        _controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<Controller>();
         Info = GameObject.FindGameObjectWithTag("Info").GetComponent<Text>();
         Tags = new List<Tag>();
-        _controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<Controller>();
     }
     public virtual void CalculateContainment()
     {

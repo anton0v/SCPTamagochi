@@ -6,7 +6,7 @@ public class AnomalyFood : AnomalyContain
 {
     public enum FOOD { MEAT, FRUIT };
     private FOOD _preferFood;
-    public FOOD CurrentFood { get; set; }
+    public FOOD CurrentFood { get; set; } = FOOD.MEAT;
     private int[] _foodCost = new int[] { 20, 10 };
 
     static protected TagFood TagFoodFruit;
@@ -30,7 +30,7 @@ public class AnomalyFood : AnomalyContain
     public override void CalculateContainment()
     {
         base.CalculateContainment();
-        _controller.Capital -= _foodCost[(int)CurrentFood];
+        _controller.Capital -= GetFoodCost();
         if (CurrentFood != _preferFood) DecreaseAngerCnt();
     }
 

@@ -17,10 +17,14 @@ public class Controller : MonoBehaviour
     private KeyCode[] _keyForRooms;
     public AnomalyTest Anomaly { get; private set; }
 
+    public UnityAction OnGameEnd;
+    public UnityAction OnFailure;
+
 
     public int Day { get; private set; } = 1;
     public int Actions { get; private set; } = 3;
     public int Capital { get; set; } = 100;
+    public bool EndGame { get; set; } = false;
 
     private KPoint EldrichKnowledge;
     private KPoint FleshKnowledge;
@@ -81,6 +85,22 @@ public class Controller : MonoBehaviour
 
     }
 
+    private void CheckEndGame()
+    {
+        if (EndGame)
+            return;
+        if (Capital < 0)
+        {
+            OnFailure();
+            EndGame = true;
+        }
+        if (Day > 10)
+        {
+            OnGameEnd();
+            EndGame = true;
+        }
+    }
+
     private void CheckKeyPadPressed()
     {
         for(int i = 0; i < _keypad.Length; i++)
@@ -118,6 +138,9 @@ public class Controller : MonoBehaviour
 
     public bool ContactTest()
     {
+        CheckEndGame();
+        if (EndGame)
+            return false;
         bool result = Anomaly.Test(contactTest);
         Anomaly.InfoUpdate();
         CheckContainment();
@@ -128,13 +151,11 @@ public class Controller : MonoBehaviour
 
     private void TakeAction()
     {
-        if(--Actions == 0)
+        if (--Actions == 0)
         {
             Actions = 3;
             Day++;
             Debug.Log("Δενό" + Day.ToString());
-            if (Day > 10)
-                return;
             OnEndDay();
         }
     }
