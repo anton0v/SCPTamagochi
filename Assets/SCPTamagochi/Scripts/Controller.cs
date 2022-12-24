@@ -106,6 +106,7 @@ public class Controller : MonoBehaviour
     public void ChangeRoom(AnomalyContain.CONTAIN_ROOM room)
     {
         Anomaly.Room = room;
+        Capital -= Anomaly.GetRoomCost();
         if (CurrentRoom != Rooms[(int)room])
         {
             if (CurrentRoom) CurrentRoom.gameObject.SetActive(false);

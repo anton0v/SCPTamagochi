@@ -15,6 +15,7 @@ public class AnomalyContain : AnomalyBehavior
     private CONTAIN_ROOM _preferRoom;
     private CONTAIN_WEAPON _weakness;
     private CONTAIN_WEAPON _ineffective;
+    private int[] _roomCost = new int[] { 0, 50, 40, 40};
 
     static protected TagRoom TagRoomOccult;
     static protected TagRoom TagRoomMetal;
@@ -39,6 +40,11 @@ public class AnomalyContain : AnomalyBehavior
     {
         int chance = (_preferRoom == Room) ? base.ResearchChance() : base.ResearchChance() - 10;
         return chance;
+    }
+
+    public int GetRoomCost()
+    {
+        return _roomCost[(int)Room];
     }
 
     protected class TagContainWeapon : Tag
