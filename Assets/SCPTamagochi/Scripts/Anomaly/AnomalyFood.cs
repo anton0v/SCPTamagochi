@@ -31,7 +31,7 @@ public class AnomalyFood : AnomalyContain
     {
         base.CalculateContainment();
         _controller.Capital -= _foodCost[(int)CurrentFood];
-        if (CurrentFood != _preferFood) _getAngry(this);
+        if (CurrentFood != _preferFood) DecreaseAngerCnt();
     }
 
     public int GetFoodCost()

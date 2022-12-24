@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AnomalyBehavior : AnomalyInfo
@@ -8,13 +9,23 @@ public class AnomalyBehavior : AnomalyInfo
     private int _angerDecrease;
 
     static protected TagBehavior TagCalm;
+    static protected TagBehavior TagUnquiet;
     static protected TagBehavior TagAngry;
+    static protected List<TagBehavior> BehaviorTagList;
 
     protected new void Awake()
     {
         base.Awake();
-        if (TagCalm == null) TagCalm = new TagBehavior("Спокойный", 1, 0, DecreaseAngerCnt);
-        if (TagAngry == null) TagAngry = new TagBehavior("Агрессивный", 3, 1, DecreaseAngerCnt);
+        if (TagCalm == null) TagCalm = new TagBehavior("Спокойный", 1, 0, null);
+        if (TagUnquiet == null) TagUnquiet = new TagBehavior("Неспокойный", 5, 1, MakeMess);
+        if (TagAngry == null) TagAngry = new TagBehavior("Агрессивный", 3, 1, DoDisaster);
+        if (BehaviorTagList == null)
+        {
+            BehaviorTagList = new List<TagBehavior>();
+            BehaviorTagList.Add(TagCalm);
+            BehaviorTagList.Add(TagUnquiet);
+            BehaviorTagList.Add(TagAngry);
+        }
     }
     protected class TagBehavior : Tag
     {
@@ -51,12 +62,23 @@ public class AnomalyBehavior : AnomalyInfo
         }
     }
 
-    public static void DecreaseAngerCnt(AnomalyBase anomaly)
+    public void DecreaseAngerCnt()
     {
-        if(((AnomalyBehavior)anomaly)._angerCount > 0)
+        _angerCount -= _angerDecrease;
+        if (_angerCount <= 0)
         {
-            ((AnomalyBehavior)anomaly)._angerCount -= ((AnomalyBehavior)anomaly)._angerDecrease;
-            if (((AnomalyBehavior)anomaly)._angerCount <= 0) ((AnomalyBehavior)anomaly).sr.color = Color.red;
+            _getAngry(this);
+            _angerCount = _angerMax;
         }
+    }
+
+    public static void MakeMess(AnomalyBase anomaly)
+    {
+        ((AnomalyBehavior)anomaly)._controller.Capital -= 100;
+    }
+    public static void DoDisaster(AnomalyBase anomaly)
+    {
+        ((AnomalyBehavior)anomaly).sr.color = Color.red;
+        ((AnomalyBehavior)anomaly)._controller.Capital -= 200;
     }
 }
