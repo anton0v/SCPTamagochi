@@ -23,19 +23,16 @@ public class AnomalyBase : MonoBehaviour
     protected void Start()
     {
         Info = GameObject.FindGameObjectWithTag("Info").GetComponent<Text>();
-        Debug.Log(Info.text);
-        //sr = gameObject.GetComponent<SpriteRenderer>();
         Tags = new List<Tag>();
         _controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<Controller>();
     }
     public virtual void CalculateContainment()
     {
-        InfoUpdate();
+        //InfoUpdate();
     }
 
     public virtual void InfoUpdate()
     {
-        Debug.Log(Info.text);
         Info.text = "Теги: ";
         for (int i = 0; i < Tags.Count; i++)
         {

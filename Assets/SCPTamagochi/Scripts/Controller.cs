@@ -19,6 +19,7 @@ public class Controller : MonoBehaviour
 
     public int Day { get; private set; } = 1;
     public int Actions { get; private set; } = 3;
+    public int Capital { get; set; } = 100;
 
     private KPoint EldrichKnowledge;
     private KPoint FleshKnowledge;
@@ -54,9 +55,7 @@ public class Controller : MonoBehaviour
     {
         Anomaly = (AnomalyTest)_anomalies[0];
         InfoUpdate();
-        Debug.Log("1");
         Anomaly.HideShowSprite();
-        Debug.Log("2");
     }
     private void Update()
     {
@@ -107,7 +106,7 @@ public class Controller : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
-            Anomaly.CalculateContainment();
+            CheckContainment();
 
         CheckKeyPadPressed();
 
@@ -131,7 +130,7 @@ public class Controller : MonoBehaviour
     {
         Anomaly.Test(contactTest);
         Anomaly.InfoUpdate();
-        Anomaly.CalculateContainment();
+        CheckContainment();
         TakeAction();
         Debug.Log(Anomaly);
         InfoUpdate();
@@ -150,9 +149,17 @@ public class Controller : MonoBehaviour
         }
     }
 
+    private void CheckContainment()
+    {
+        for (int i = 0; i < _anomalies.Count; i++)
+        {
+            _anomalies[i].CalculateContainment();
+        }
+    }
     public void InfoUpdate()
     {
         Info.text = "Информация: ";
+        Info.text += "\nКапитал: " + Capital;
         for (int i = 0; i < KPList.Count; i++)
         {
             Info.text += "\n" + KPList[i].Name + ": " + KPList[i].Count;
@@ -168,6 +175,7 @@ public class Controller : MonoBehaviour
                 KPList[i].Count++;
         }
     }
+
 
     public int GetKPointsOfType(AnomalyInfo.INFO infoType)
     {
