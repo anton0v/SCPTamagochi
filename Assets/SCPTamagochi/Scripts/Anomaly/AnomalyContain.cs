@@ -36,6 +36,12 @@ public class AnomalyContain : AnomalyBehavior
             RoomTagList.Add(TagRoomHouse);
         }
     }
+
+    public override void CalculateContainment()
+    {
+        base.CalculateContainment();
+        if (Room != _preferRoom) DecreaseAngerCnt();
+    }
     protected override int ResearchChance()
     {
         int chance = (_preferRoom == Room) ? base.ResearchChance() : base.ResearchChance() - 10;

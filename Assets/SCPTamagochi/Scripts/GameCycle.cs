@@ -5,9 +5,10 @@ using UnityEngine;
 public class GameCycle : MonoBehaviour
 {
     [SerializeField] private Controller _controller;
-    [SerializeField] private AnomalyTest Anomaly;
+    [SerializeField] private AnomalyTest SimpleAnomaly;
+    [SerializeField] private AnomalyTest NormalAnomaly;
+    [SerializeField] private AnomalyTest HardAnomaly;
     private int _finance = 200;
-
     private void Start()
     {
         AddAnomaly();
@@ -20,14 +21,26 @@ public class GameCycle : MonoBehaviour
 
     public void AddAnomaly()
     {
-        AnomalyTest newAnomaly = Instantiate(Anomaly, new Vector2(0.07f, 2.042333f), Quaternion.identity);
+        AnomalyTest newAnomaly;
+        if (_controller.Day < 4)
+            newAnomaly = CreateAnomaly(SimpleAnomaly);
+        else if (_controller.Day < 8)
+            newAnomaly = CreateAnomaly(NormalAnomaly);
+        else
+            newAnomaly = CreateAnomaly(HardAnomaly);
+
         _controller.AddAnomaly(newAnomaly);
+    }
+
+    private AnomalyTest CreateAnomaly(AnomalyTest anomaly)
+    {
+        return Instantiate(anomaly, new Vector2(0.07f, 2.042333f), Quaternion.identity);
     }
 
     public void ProvideFunding()
     {
         _controller.Capital += _finance;
-        _finance += 100 * (_controller.Day - 1);
+        _finance += 50 * (_controller.Day - 1);
     }
 
     public void Victory()

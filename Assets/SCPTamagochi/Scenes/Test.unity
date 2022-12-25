@@ -575,7 +575,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _controller: {fileID: 1966211931}
-  Anomaly: {fileID: 3901471906043936653, guid: 933d65a33e89a4d4da8d7261e3000439, type: 3}
+  SimpleAnomaly: {fileID: 3901471906043936653, guid: 933d65a33e89a4d4da8d7261e3000439, type: 3}
+  NormalAnomaly: {fileID: 3901471906043936653, guid: 2e0561bdfedbb48468fe9246b9b85002, type: 3}
+  HardAnomaly: {fileID: 3901471906043936653, guid: 371f6686daec3a749bb14f93f335e4d9, type: 3}
 --- !u!4 &1320450056
 Transform:
   m_ObjectHideFlags: 0

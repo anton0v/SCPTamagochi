@@ -74,11 +74,11 @@ public class AnomalyBehavior : AnomalyInfo
 
     public static void MakeMess(AnomalyBase anomaly)
     {
-        ((AnomalyBehavior)anomaly)._controller.Capital -= 100;
+        ((AnomalyBehavior)anomaly)._controller.Capital -= 200;
     }
     public static void DoDisaster(AnomalyBase anomaly)
     {
         ((AnomalyBehavior)anomaly).sr.color = Color.red;
-        ((AnomalyBehavior)anomaly)._controller.Capital -= 200;
+        ((AnomalyBehavior)anomaly)._controller.Capital -= 500;
     }
 }

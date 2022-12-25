@@ -110,5 +110,6 @@ public class AnomalyBase : MonoBehaviour
         {
             Tags[i].SetTag(this);
         }
+        ShuffleHiddenTags();
     }
 }
