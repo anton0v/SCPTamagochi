@@ -3,25 +3,31 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Controller : MonoBehaviour
 {
-    [SerializeField] private AnomalyTest[] anomalies;
+    
     [SerializeField] private Text Info;
     [SerializeField] private GameObject[] Rooms;
     [SerializeField] private GameObject CurrentRoom;
+    private List<AnomalyBase> _anomalies;
+    private KeyCode[] _keypad;
+    private KeyCode[] _keyForRooms;
     public AnomalyTest Anomaly { get; private set; }
 
 
     public int Day { get; private set; } = 1;
     public int Actions { get; private set; } = 3;
+    public int Capital { get; set; } = 100;
 
     private KPoint EldrichKnowledge;
     private KPoint FleshKnowledge;
     private KPoint MechKnowledge;
     public List<KPoint> KPList { get; private set; }
     private Test contactTest;
+    public UnityAction OnEndDay;
     
 
     private void Awake()
@@ -34,13 +40,24 @@ public class Controller : MonoBehaviour
         KPList.Add(EldrichKnowledge);
         KPList.Add(FleshKnowledge);
         KPList.Add(MechKnowledge);
+        _keypad = new KeyCode[] { KeyCode.Keypad0,
+                                  KeyCode.Keypad1, KeyCode.Keypad2, KeyCode.Keypad3,
+                                  KeyCode.Keypad4, KeyCode.Keypad5, KeyCode.Keypad6,
+                                  KeyCode.Keypad7, KeyCode.Keypad8, KeyCode.Keypad9,
+        };
+        _keyForRooms = new KeyCode[] { 0, KeyCode.A , KeyCode.S , KeyCode.D };
+        _anomalies = new List<AnomalyBase>();
     }
 
     private void Start()
     {
-        Anomaly = anomalies[0];
+        
+    }
+    public void Init()
+    {
+        Anomaly = (AnomalyTest)_anomalies[0];
         InfoUpdate();
-        Anomaly.InfoUpdate();
+        Anomaly.HideShowSprite();
     }
     private void Update()
     {
@@ -54,60 +71,31 @@ public class Controller : MonoBehaviour
             ContactTest();
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Anomaly.Room = AnomalyContain.CONTAIN_ROOM.OCCULT;
-            if (CurrentRoom != Rooms[1])
-            {
-                if (CurrentRoom) CurrentRoom.gameObject.SetActive(false);
-                CurrentRoom = Rooms[1];
-                CurrentRoom.gameObject.SetActive(true);
-            }
-            InfoUpdate();
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Anomaly.Room = AnomalyContain.CONTAIN_ROOM.METAL;
-            if (CurrentRoom != Rooms[2])
-            {
-                if (CurrentRoom) CurrentRoom.gameObject.SetActive(false);
-                CurrentRoom = Rooms[2];
-                CurrentRoom.gameObject.SetActive(true);
-            }
-            InfoUpdate();
-        }
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            Anomaly.Room = AnomalyContain.CONTAIN_ROOM.HOUSE;
-            if (CurrentRoom != Rooms[3])
-            {
-                if (CurrentRoom) CurrentRoom.gameObject.SetActive(false);
-                CurrentRoom = Rooms[3];
-                CurrentRoom.gameObject.SetActive(true);
-            }
-            InfoUpdate();
-        }
+        
 
         if (Input.GetKeyDown(KeyCode.Space))
-            Anomaly.CalculateContainment();
+            CheckContainment();
 
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-        {
-            SwitchAnomaly(0);
-        }
+        CheckKeyPadPressed();
+        CheckKeyForRooms();
 
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            SwitchAnomaly(1);
-        }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Keypad3))
-        {
-            SwitchAnomaly(2);
-        }
-
+    private void CheckKeyPadPressed()
+    {
+        for(int i = 0; i < _keypad.Length; i++)
+            if (Input.GetKeyDown(_keypad[i]))
+            {
+                SwitchAnomaly(i);
+            }
+    }
+    private void CheckKeyForRooms()
+    {
+        for (int i = 0; i < _keyForRooms.Length; i++)
+            if (Input.GetKeyDown(_keyForRooms[i]))
+            {
+                ChangeRoom((AnomalyContain.CONTAIN_ROOM)i);
+            }
     }
     public void ChangeDiet()
     {
@@ -115,14 +103,26 @@ public class Controller : MonoBehaviour
         Anomaly.InfoUpdate();
     }
 
-    public void ContactTest()
+    public void ChangeRoom(AnomalyContain.CONTAIN_ROOM room)
     {
-        Anomaly.Test(contactTest);
-        Anomaly.InfoUpdate();
-        Anomaly.CalculateContainment();
-        TakeAction();
-        Debug.Log(Anomaly);
+        Anomaly.Room = room;
+        if (CurrentRoom != Rooms[(int)room])
+        {
+            if (CurrentRoom) CurrentRoom.gameObject.SetActive(false);
+            CurrentRoom = Rooms[(int)room];
+            CurrentRoom.gameObject.SetActive(true);
+        }
         InfoUpdate();
+    }
+
+    public bool ContactTest()
+    {
+        bool result = Anomaly.Test(contactTest);
+        Anomaly.InfoUpdate();
+        CheckContainment();
+        TakeAction();
+        InfoUpdate();
+        return result;
     }
 
     private void TakeAction()
@@ -132,12 +132,23 @@ public class Controller : MonoBehaviour
             Actions = 3;
             Day++;
             Debug.Log("День" + Day.ToString());
+            if (Day > 10)
+                return;
+            OnEndDay();
         }
     }
 
+    private void CheckContainment()
+    {
+        for (int i = 0; i < _anomalies.Count; i++)
+        {
+            _anomalies[i].CalculateContainment();
+        }
+    }
     public void InfoUpdate()
     {
         Info.text = "Информация: ";
+        Info.text += "\nКапитал: " + Capital;
         for (int i = 0; i < KPList.Count; i++)
         {
             Info.text += "\n" + KPList[i].Name + ": " + KPList[i].Count;
@@ -154,6 +165,10 @@ public class Controller : MonoBehaviour
         }
     }
 
+    public int GetAnomalyCount()
+    {
+        return _anomalies.Count;
+    }
     public int GetKPointsOfType(AnomalyInfo.INFO infoType)
     {
         for(int i = 0; i < KPList.Count; i++)
@@ -185,12 +200,17 @@ public class Controller : MonoBehaviour
         CurrentRoom.gameObject.SetActive(true);
     }
 
+    public void AddAnomaly(AnomalyBase anomaly)
+    {
+        _anomalies.Add(anomaly);
+    }
+
     public void SwitchAnomaly(int num)
     {
-        if(num < anomalies.Length)
+        if(num < _anomalies.Count)
         {
             Anomaly.HideShowSprite();
-            Anomaly = anomalies[num];
+            Anomaly = (AnomalyTest)_anomalies[num];
             Anomaly.HideShowSprite();
             Anomaly.InfoUpdate();
             InfoUpdate();
