@@ -8,6 +8,7 @@ public class AnomalyInfo : AnomalyBase
 {
     public enum INFO { FLESH, MECH, ELDRICH};
     public INFO InfoType { get; private set; }
+
     protected int _infoRequiredScore = 0;
 
     static protected TagInfo TagFlesh;

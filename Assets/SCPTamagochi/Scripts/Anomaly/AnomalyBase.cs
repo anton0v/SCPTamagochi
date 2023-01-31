@@ -8,18 +8,16 @@ using UnityEngine.UI;
 public class AnomalyBase : MonoBehaviour
 {
     [SerializeField] protected Sprite[] SpriteSamples;
-    protected Text Info;
     [SerializeField] protected SpriteRenderer sr;
+
     public List<Tag> Tags { get; private set; }
-    protected delegate void GetAngry(AnomalyBase anomaly);
-    protected GetAngry _getAngry;
-    protected Controller _controller;
     public bool IsStudied { get; private set; } = false;
 
-    private void Awake()
-    {
-        
-    }
+    protected Text Info;
+    protected Controller _controller;
+    protected delegate void GetAngry(AnomalyBase anomaly);
+    protected GetAngry _getAngry;
+
     protected void Start()
     {
         _controller = GameObject.FindGameObjectWithTag("Controller").GetComponent<Controller>();
@@ -27,9 +25,7 @@ public class AnomalyBase : MonoBehaviour
         Tags = new List<Tag>();
     }
     public virtual void CalculateContainment()
-    {
-        //InfoUpdate();
-    }
+    {}
 
     public virtual void InfoUpdate()
     {
@@ -73,11 +69,12 @@ public class AnomalyBase : MonoBehaviour
 
     public class Tag
     {
-        protected int TagId;
-        public bool Hidden { get; protected set; }
         public string Name { get; protected set; }
+        public bool Hidden { get; protected set; }
         public delegate void TagDelegate(AnomalyBase anomaly);
         public TagDelegate SetTag;
+        protected int TagId;
+        
         public Tag(string name)
         {
             TagId = 0;

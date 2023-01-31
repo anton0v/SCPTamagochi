@@ -5,8 +5,9 @@ using UnityEngine;
 public class AnomalyFood : AnomalyContain
 {
     public enum FOOD { MEAT, FRUIT };
-    private FOOD _preferFood;
     public FOOD CurrentFood { get; set; } = FOOD.MEAT;
+
+    private FOOD _preferFood;
     private int[] _foodCost = new int[] { 20, 10 };
 
     static protected TagFood TagFoodFruit;
@@ -24,7 +25,6 @@ public class AnomalyFood : AnomalyContain
             FoodTagList.Add(TagFoodMeat);
             FoodTagList.Add(TagFoodFruit);
         }
-
     }
 
     public override void CalculateContainment()

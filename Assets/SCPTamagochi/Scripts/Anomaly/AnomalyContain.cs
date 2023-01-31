@@ -74,12 +74,11 @@ public class AnomalyContain : AnomalyBehavior
         {
             ((AnomalyContain)anomaly)._ineffective = _containWeapon;
         }
-
     }
 
     protected class TagRoom : Tag
     {
-        CONTAIN_ROOM _room;
+        private CONTAIN_ROOM _room;
         public TagRoom(string name, CONTAIN_ROOM room) : base(name)
         {
             TagId = 4;
