@@ -1,4 +1,4 @@
-using Newtonsoft.Json.Bson;
+п»їusing Newtonsoft.Json.Bson;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,10 +32,10 @@ public class Controller : MonoBehaviour
 
     private void Awake()
     {
-        contactTest = new Test("Контакт", new List<int>(new int[] { 1, 2, 3, 4 }));
-        EldrichKnowledge = new KPoint("Древние", AnomalyInfo.INFO.ELDRICH);
-        FleshKnowledge = new KPoint("Плоть", AnomalyInfo.INFO.FLESH);
-        MechKnowledge = new KPoint("Механ", AnomalyInfo.INFO.MECH);
+        contactTest = new Test("ГЉГ®Г­ГІГ ГЄГІ", new List<int>(new int[] { 1, 2, 3, 4 }));
+        EldrichKnowledge = new KPoint("Г„Г°ГҐГўГ­ГЁГҐ", AnomalyInfo.INFO.ELDRICH);
+        FleshKnowledge = new KPoint("ГЏГ«Г®ГІГј", AnomalyInfo.INFO.FLESH);
+        MechKnowledge = new KPoint("ГЊГҐГµГ Г­", AnomalyInfo.INFO.MECH);
         KPList = new List<KPoint>();
         KPList.Add(EldrichKnowledge);
         KPList.Add(FleshKnowledge);
@@ -131,7 +131,7 @@ public class Controller : MonoBehaviour
         {
             Actions = 3;
             Day++;
-            Debug.Log("День" + Day.ToString());
+            Debug.Log("Р”РµРЅСЊ" + Day.ToString());
             if (Day > 10)
                 return;
             OnEndDay();
@@ -147,8 +147,8 @@ public class Controller : MonoBehaviour
     }
     public void InfoUpdate()
     {
-        Info.text = "Информация: ";
-        Info.text += "\nКапитал: " + Capital;
+        Info.text = "Г€Г­ГґГ®Г°Г¬Г Г¶ГЁГї: ";
+        Info.text += "\nГЉГ ГЇГЁГІГ Г«: " + Capital;
         for (int i = 0; i < KPList.Count; i++)
         {
             Info.text += "\n" + KPList[i].Name + ": " + KPList[i].Count;
