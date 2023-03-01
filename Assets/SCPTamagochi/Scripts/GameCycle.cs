@@ -11,9 +11,9 @@ public class GameCycle : MonoBehaviour
     private int _finance = 200;
     private void Start()
     {
-        AddAnomaly();
+        //AddAnomaly();
         _controller.Init();
-        _controller.OnEndDay += AddAnomaly;
+        //_controller.OnEndDay += AddAnomaly;
         _controller.OnEndDay += ProvideFunding;
         _controller.OnGameEnd += Victory;
         _controller.OnFailure += Failure;

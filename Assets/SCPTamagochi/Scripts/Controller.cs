@@ -13,7 +13,7 @@ public class Controller : MonoBehaviour
     [SerializeField] private GameObject[] Rooms;
     [SerializeField] private GameObject CurrentRoom;
 
-    public AnomalyTest Anomaly { get; private set; }
+    public AnomalyBase Anomaly { get; private set; }
     public int Day { get; private set; } = 1;
     public int Actions { get; private set; } = 3;
     public int Capital { get; set; } = 100;
@@ -23,7 +23,7 @@ public class Controller : MonoBehaviour
     public UnityAction OnFailure;
     public UnityAction OnEndDay;
 
-    private List<AnomalyBase> _anomalies;
+    [SerializeField]private List<AnomalyBase> _anomalies; // убрать [SerializeField]
     private KeyCode[] _keypad;
     private KeyCode[] _keyForRooms;
     private KPoint EldrichKnowledge;
@@ -51,12 +51,12 @@ public class Controller : MonoBehaviour
 
         _keyForRooms = new KeyCode[] { 0, KeyCode.A , KeyCode.S , KeyCode.D };
 
-        _anomalies = new List<AnomalyBase>();
+        //_anomalies = new List<AnomalyBase>();
     }
 
     public void Init()
     {
-        Anomaly = (AnomalyTest)_anomalies[0];
+        Anomaly = _anomalies[0];
         InfoUpdate();
         Anomaly.HideShowSprite();
     }
@@ -111,14 +111,14 @@ public class Controller : MonoBehaviour
     }
     public void ChangeDiet()
     {
-        Anomaly.CurrentFood = (AnomalyFood.FOOD)((int)(Anomaly.CurrentFood + 1) % AnomalyFood.FOOD.GetNames(typeof(AnomalyFood.FOOD)).Length);
+        ((AnomalyFood)Anomaly).CurrentFood = (AnomalyFood.FOOD)((int)(((AnomalyFood)Anomaly).CurrentFood + 1) % AnomalyFood.FOOD.GetNames(typeof(AnomalyFood.FOOD)).Length);
         Anomaly.InfoUpdate();
     }
 
     public void ChangeRoom(AnomalyContain.CONTAIN_ROOM room)
     {
-        Anomaly.Room = room;
-        Capital -= Anomaly.GetRoomCost();
+        ((AnomalyContain)Anomaly).Room = room;
+        Capital -= ((AnomalyContain)Anomaly).GetRoomCost();
         if (CurrentRoom != Rooms[(int)room])
         {
             CurrentRoom.gameObject.SetActive(false);
@@ -133,7 +133,7 @@ public class Controller : MonoBehaviour
         CheckEndGame();
         if (EndGame)
             return false;
-        bool result = Anomaly.Test(contactTest);
+        bool result = ((AnomalyContain)Anomaly).Test(contactTest);
         Anomaly.InfoUpdate();
         CheckContainment();
         TakeAction();
@@ -200,7 +200,7 @@ public class Controller : MonoBehaviour
         if(num < _anomalies.Count)
         {
             Anomaly.HideShowSprite();
-            Anomaly = (AnomalyTest)_anomalies[num];
+            Anomaly = _anomalies[num];
             Anomaly.HideShowSprite();
             Anomaly.InfoUpdate();
             InfoUpdate();
